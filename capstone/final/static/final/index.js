@@ -195,3 +195,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
     };
     
 });
+
+function Random(){
+    let randomNumber = Math.floor(Math.random() * 9999) + 1;
+    Film(randomNumber);
+}
