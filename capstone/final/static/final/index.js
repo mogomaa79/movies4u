@@ -8,9 +8,16 @@ function Add(id, watchlist){
     })
     if (watchlist){
         document.querySelector('button').innerHTML = 'Add to Watchlist';
+        console.log( document.querySelector('button'));
+        document.querySelector('button').setAttribute('onclick', `Add(${id}, false)`);
     }else{
         document.querySelector('button').innerHTML = 'Remove from Watchlist';
+        console.log( document.querySelector('button'));
+        document.querySelector('button').setAttribute('onclick', `Add(${id}, true)`);
+        
     }
+
+    
 }
 
 
