@@ -46,7 +46,7 @@ def get_film(request, id):
         else:
             request.user.watchlist.add(film_watchlist)
         
-        return JsonResponse({"watchlist" : body["watchlist"]})
+        return JsonResponse({"watchlist" :  body["watchlist"]})
 
     elif request.method == "GET":
         id = int(id)
