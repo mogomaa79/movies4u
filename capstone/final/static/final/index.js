@@ -5,17 +5,21 @@ function Add(id, watchlist){
             id: id,
             watchlist: watchlist
         })
+    }).then(response => response.json())
+    .then(response => {
+        if (response["watchlist"]){
+            document.querySelector('button').innerHTML = 'Add to Watchlist';
+            
+            document.querySelector('button').setAttribute('onclick', `Add(${id}, false)`);
+        }else{
+            document.querySelector('button').innerHTML = 'Remove from Watchlist';
+            
+            document.querySelector('button').setAttribute('onclick', `Add(${id}, true)`);
+            
+        }
+        console.log((response["watchlist"]));
     })
-    if (watchlist){
-        document.querySelector('button').innerHTML = 'Add to Watchlist';
-        console.log( document.querySelector('button'));
-        document.querySelector('button').setAttribute('onclick', `Add(${id}, false)`);
-    }else{
-        document.querySelector('button').innerHTML = 'Remove from Watchlist';
-        console.log( document.querySelector('button'));
-        document.querySelector('button').setAttribute('onclick', `Add(${id}, true)`);
-        
-    }
+    
 
     
 }
@@ -148,7 +152,7 @@ function Watchlist(){
         })
         .then(response => response.json())
         .then(function(films){
-            console.log(films);
+            //console.log(films);
             films.forEach(film => {
                 Div(film, '.watchlist');
             });
@@ -165,7 +169,7 @@ function Searched(){
     })
     .then(response => response.json())
     .then(function(films){
-        console.log(films);
+        //console.log(films);
         document.querySelector('#search-form').style.display = 'none';
         films.forEach(film => {
             Div(film, '.search-results');
@@ -173,14 +177,14 @@ function Searched(){
     });
 }
 document.addEventListener('DOMContentLoaded', ()=>{
-    console.log('tmam1');
+    //console.log('tmam1');
     const counter = 34;
     let start = 1;
     let end = counter + start;
     fetch(`films?start=${start}&end=${end}`)
     .then(response => response.json())
     .then(function(films){
-        console.log(films);
+        //console.log(films);
         films.forEach(film => {
             Div(film, '.movie-container');
         });
@@ -193,7 +197,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
             fetch(`films?start=${start}&end=${end}`)
             .then(response => response.json())
             .then(function(films){
-                console.log(films);
+                //console.log(films);
                 films.forEach(film => {
                     Div(film, '.movie-container');
                 });
