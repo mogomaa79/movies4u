@@ -77,13 +77,50 @@ def watchlist(request):
     if request.method == "GET":
         return redirect(reverse("index"))
     
-    else:
+    elif request.method == "POST":
         
         watchlist = User.objects.get(username=request.user.username).watchlist.all()
         film_info = [film.json() for film in list(watchlist)]
         
         return JsonResponse(list(film_info), safe=False)
     
+    elif request.method == "PUT":
+        body = request.body
+        body = json.loads(body)
+        film_watchlist = Film.objects.filter(id=body["id"]).first()
+        if (body["watchlist"]):
+            request.user.watchlist.remove(film_watchlist)
+        
+        else:
+            request.user.watchlist.add(film_watchlist)
+        
+        return JsonResponse({"watchlist" :  body["watchlist"]})
+
+@csrf_exempt
+def watchedlist(request):
+    if request.method == "GET":
+        return redirect(reverse("index"))
+    
+    elif request.method == "POST":
+        
+        watchedlist = User.objects.get(username=request.user.username).watchedlist.all()
+        film_info = [film.json() for film in list(watchedlist)]
+        
+        return JsonResponse(list(film_info), safe=False)
+    
+    elif request.method == "PUT":
+        body = request.body
+        body = json.loads(body)
+        film_watchlist = Film.objects.filter(id=body["id"]).first()
+        if (body["watched"]):
+            request.user.watchedlist.remove(film_watchlist)
+        
+        else:
+            request.user.watchedlist.add(film_watchlist)
+        
+        return JsonResponse({"watched" :  body["watched"]})
+        
+        
 def login_view(request):
     if request.method == "POST":
 

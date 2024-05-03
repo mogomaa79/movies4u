@@ -25,11 +25,12 @@ class Film(models.Model):
             "description" : self.description,
             "director" : self.director,
             "stars" : self.stars,
-            "users" : [user.username for user in list(self.users.all())]
+            "users" : [user.username for user in list(self.users.all())],
+            "watchers" : [user.username for user in list(self.watchers.all())]
         }
 
 
 class User(AbstractUser):
     watchlist = models.ManyToManyField(Film, blank=True, related_name="users")
-
+    watchedlist = models.ManyToManyField(Film, blank=True, related_name="watchers")
 

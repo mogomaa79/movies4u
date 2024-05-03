@@ -1,5 +1,5 @@
 function Add(id, watchlist){
-    fetch(`/films/${id}`, {
+    fetch(`/watchlist`, {
         method: 'PUT',
         body: JSON.stringify({
             id: id,
@@ -8,20 +8,41 @@ function Add(id, watchlist){
     }).then(response => response.json())
     .then(response => {
         if (response["watchlist"]){
-            document.querySelector('button').innerHTML = 'Add to Watchlist';
+            document.querySelector('#watchlist-add-button').innerHTML = 'Add to Watchlist';
             
-            document.querySelector('button').setAttribute('onclick', `Add(${id}, false)`);
+            document.querySelector('#watchlist-add-button').setAttribute('onclick', `Add(${id}, false)`);
         }else{
-            document.querySelector('button').innerHTML = 'Remove from Watchlist';
+            document.querySelector('#watchlist-add-button').innerHTML = 'Remove from Watchlist';
             
-            document.querySelector('button').setAttribute('onclick', `Add(${id}, true)`);
+            document.querySelector('#watchlist-add-button').setAttribute('onclick', `Add(${id}, true)`);
             
         }
         console.log((response["watchlist"]));
     })
-    
+       
+}
 
-    
+function Watched(id, watched){
+    fetch(`/watchedlist`, {
+        method: 'PUT',
+        body: JSON.stringify({
+            id: id,
+            watched: watched
+        })
+    }).then(response => response.json())
+    .then(response => {
+        if (response["watched"]){
+            document.querySelector('#watchedlist-add-button').innerHTML = 'Add to Watchedlist';
+            
+            document.querySelector('#watchedlist-add-button').setAttribute('onclick', `Watched(${id}, false)`);
+        }else{
+            document.querySelector('#watchedlist-add-button').innerHTML = 'Remove from Watchedlist';
+            
+            document.querySelector('#watchedlist-add-button').setAttribute('onclick', `Watched(${id}, true)`);
+            
+        }
+        console.log((response["watched"]));
+    })
 }
 
 
@@ -31,6 +52,7 @@ function Film(id){
     document.querySelector('.film-container').style.display = 'block';
     document.querySelector('.search-container').style.display = 'none';
     document.querySelector('.watchlist').style.display = 'none';
+    document.querySelector('.watchedlist').style.display = 'none';
     document.querySelector('.film-container').innerHTML = '';
     fetch(`films/${id}`)
     .then(response => response.json())
@@ -61,6 +83,7 @@ function Film(id){
         watchlist.setAttribute('onsubmit', 'return false;');
         
         watchlist.setAttribute('class', 'button');
+        watchlist.setAttribute('id', 'watchlist-add-button');
         const user_id = document.querySelector('#user_id')
         if (film.users.includes(user_id.innerHTML)){
             watchlist.innerHTML = 'Remove from Watchlist';
@@ -68,6 +91,19 @@ function Film(id){
         }else{
             watchlist.innerHTML = 'Add to Watchlist';
             watchlist.setAttribute('onclick', `Add(${film.id}, false)`);
+        }
+
+        const watchedlist = document.createElement('button');
+        watchlist.setAttribute('onsubmit', 'return false;');
+        
+        watchedlist.setAttribute('class', 'button');
+        watchedlist.setAttribute('id', 'watchedlist-add-button');
+        if (film.watchers.includes(user_id.innerHTML)){
+            watchedlist.innerHTML = 'Remove from Watchedlist';
+            watchedlist.setAttribute('onclick', `Watched(${film.id}, true)`);
+        }else{
+            watchedlist.innerHTML = 'Add to Watchedlist';
+            watchedlist.setAttribute('onclick', `Watched(${film.id}, false)`);
         }
         
         div_1.append(image);
@@ -79,6 +115,7 @@ function Film(id){
         div_2.append(h5_2);
         div_2.append(h6);
         div_1.append(watchlist);
+        div_1.append(watchedlist);
         document.querySelector('.film-container').append(div_1);
         document.querySelector('.film-container').append(div_2);   
         
@@ -117,20 +154,24 @@ function Home(){
     document.querySelector('.film-container').style.display = 'none';
     document.querySelector('.search-container').style.display = 'none';
     document.querySelector('.watchlist').style.display = 'none';
+    document.querySelector('.watchedlist').style.display = 'none';
     const navbar = document.querySelector('.navbar');
     navbar.querySelector('#home-button').setAttribute('class', 'active');
     navbar.querySelector('#search-button').setAttribute('class', '');
     navbar.querySelector('#watchlist-button').setAttribute('class', '');
+    navbar.querySelector('#watchedlist-button').setAttribute('class', '');
 }
 function Search(){
     document.querySelector('.movie-container').style.display = 'none';
     document.querySelector('.film-container').style.display = 'none';
     document.querySelector('.search-container').style.display = 'flex';
     document.querySelector('.watchlist').style.display = 'none';
+    document.querySelector('.watchedlist').style.display = 'none';
     const navbar = document.querySelector('.navbar');
     navbar.querySelector('#home-button').setAttribute('class', '');
     navbar.querySelector('#search-button').setAttribute('class', 'active');
     navbar.querySelector('#watchlist-button').setAttribute('class', '');
+    navbar.querySelector('#watchedlist-button').setAttribute('class', '');
     document.querySelector('#search-form').style.display = 'flex';
     document.querySelector('.search-results').innerHTML = '';
 }
@@ -140,11 +181,13 @@ function Watchlist(){
     document.querySelector('.film-container').style.display = 'none';
     document.querySelector('.search-container').style.display = 'none';
     document.querySelector('.watchlist').style.display = 'flex';
+    document.querySelector('.watchedlist').style.display = 'none';
     document.querySelector('.search-results').innerHTML = '';
     const navbar = document.querySelector('.navbar');
     navbar.querySelector('#home-button').setAttribute('class', '');
     navbar.querySelector('#search-button').setAttribute('class', '');
     navbar.querySelector('#watchlist-button').setAttribute('class', 'active');
+    navbar.querySelector('#watchedlist-button').setAttribute('class', '');
     document.querySelector('#search-form').style.display = 'flex';
     document.querySelector('.watchlist').innerHTML = '';
     fetch(`/watchlist`, {
@@ -158,6 +201,33 @@ function Watchlist(){
             });
         });
 }
+
+function Watchedlist(){
+    document.querySelector('.movie-container').style.display = 'none';
+    document.querySelector('.film-container').style.display = 'none';
+    document.querySelector('.search-container').style.display = 'none';
+    document.querySelector('.watchlist').style.display = 'none';
+    document.querySelector('.watchedlist').style.display = 'flex';
+    document.querySelector('.search-results').innerHTML = '';
+    const navbar = document.querySelector('.navbar');
+    navbar.querySelector('#home-button').setAttribute('class', '');
+    navbar.querySelector('#search-button').setAttribute('class', '');
+    navbar.querySelector('#watchlist-button').setAttribute('class', '');
+    navbar.querySelector('#watchedlist-button').setAttribute('class', 'active');
+    document.querySelector('#search-form').style.display = 'flex';
+    document.querySelector('.watchedlist').innerHTML = '';
+    fetch(`/watchedlist`, {
+        method : 'POST',
+        })
+        .then(response => response.json())
+        .then(function(films){
+            //console.log(films);
+            films.forEach(film => {
+                Div(film, '.watchedlist');
+            });
+        });
+}
+
 function Searched(){
     document.querySelector('.search-results').innerHTML = '';
     const film = document.querySelector('#search-film').value

@@ -187,7 +187,16 @@ flex-wrap: wrap;
     margin-bottom: 20px;
     flex-wrap: wrap;
     align-items: center;
-    flex-direction: column;
+    flex-direction: row;
+}
+
+.watchedlist {
+    display: none;
+    justify-content: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+    flex-direction: row;
 }
 
 .search-container form {
@@ -225,6 +234,7 @@ background-color: #718096;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    margin: 5px;
 }
     
 .button:hover {
