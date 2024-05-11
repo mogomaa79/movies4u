@@ -8,6 +8,8 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 import json
 from django.views.decorators.csrf import csrf_exempt
+from .util import *
+
 # Create your views here.
 @login_required(login_url='/login')
 def index(request):
@@ -171,3 +173,8 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "final/register.html")
+    
+
+@login_required
+def recommendations(request):
+    ...
