@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from .models import *
-import json
+import json, random
 from django.views.decorators.csrf import csrf_exempt
 from .util import *
 
@@ -177,4 +177,6 @@ def register(request):
 
 @login_required
 def recommendations(request):
-    ...
+    liked_list = User.objects.get(username=request.user.username).watchedlist.all()
+    films = get_recommendations(list(liked_list.values_list("id", flat=True)))
+    return JsonResponse(random.choice(films[:20]) if films else 1, safe=False)

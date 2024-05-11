@@ -28,7 +28,7 @@ def get_recommendations(liked_list):
     total_sim_scores = {}
 
     for idx in liked_list:
-        sim_scores = cosine_sim[idx]
+        sim_scores = cosine_sim[idx - 1]
 
         for i, score in enumerate(sim_scores):
             total_sim_scores[i] = total_sim_scores.get(i, 0.0) + score
@@ -37,4 +37,5 @@ def get_recommendations(liked_list):
 
     return movie_indices[len(liked_list):]
 
-print(names.iloc[get_recommendations([4140, 250, 13, 11, 10, 120, 2222, 999])].head(20))
+print(indices["The Godfather"])
+print(names.iloc[get_recommendations([2])].head(20))

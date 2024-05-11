@@ -281,3 +281,13 @@ function Random(){
     let randomNumber = Math.floor(Math.random() * 9999) + 1;
     Film(randomNumber);
 }
+
+function Recommend() { 
+    fetch(`/recommendations`, {
+        method : 'GET',
+        })
+        .then(response => response.json())
+        .then(function(id){
+            Film(id)
+        });
+}
