@@ -1,21 +1,26 @@
+from django.conf import settings
+import os
 import pickle
-from sklearn.metrics.pairwise import linear_kernel
 
-# with open("static/final/tfidf_matrix.pkl", "rb") as f:
-#     tfidf_matrix = pickle.load(f)
+# Construct the file paths using os.path.join() and settings.BASE_DIR
+embeddings_path = os.path.join(settings.BASE_DIR, 'final', 'static', 'final','embeddings.pkl')
+model_path = os.path.join(settings.BASE_DIR, 'final', 'static', 'final','recommender_model.pkl')
 
-# cosine_sim = linear_kernel(tfidf_matrix, tfidf_matrix)
+# Open the files
+with open(embeddings_path, 'rb') as f:
+    embeddings = pickle.load(f)
 
-# def get_recommendations(liked_list):
-#     if not liked_list: return []
-#     total_sim_scores = {}
+with open(model_path, 'rb') as f:
+    nn = pickle.load(f)
 
-#     for idx in liked_list:
-#         sim_scores = cosine_sim[idx]
 
-#         for i, score in enumerate(sim_scores):
-#             total_sim_scores[i] = total_sim_scores.get(i, 0.0) + score
+def get_recommendations(liked_list:list) -> list:
+    """Uses Nearest Neighbor Algorithm to Recommend Movies"""
+    if not liked_list: return []
+    similars = set()
+    
+    for idx in liked_list:
+        similars.update(nn.kneighbors([embeddings[idx - 1]], n_neighbors=10, return_distance=False)[0])
 
-#     movie_indices = sorted(total_sim_scores, key=total_sim_scores.get, reverse=True)
-
-#     return movie_indices[len(liked_list):]
+    # Future Design Planned
+    return list(similars - set([l - 1 for l in liked_list]))
