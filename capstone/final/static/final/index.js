@@ -287,6 +287,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 });
 
 function Random(){
+    document.querySelector('.recommendations-container').style.display = 'none';
     let randomNumber = Math.floor(Math.random() * 9999) + 1;
     Film(randomNumber);
 }
@@ -305,12 +306,12 @@ function Recommend() {
     navbar.querySelector('#watchlist-button').setAttribute('class', '');
     navbar.querySelector('#watchedlist-button').setAttribute('class', '');
     navbar.querySelector('#recommend-button').setAttribute('class', 'active');
+    document.querySelector('.recommendations-container').innerHTML = '';
     fetch(`/recommendations`, {
         method : 'GET',
         })
         .then(response => response.json())
         .then(function(films){
-            document.querySelector('.recommendations-container').innerHTML = '';
             films.forEach(film => {
                 Div(film, '.recommendations-container');
             });
