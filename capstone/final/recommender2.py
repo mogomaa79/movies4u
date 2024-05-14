@@ -6,8 +6,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.neighbors import NearestNeighbors
 import numpy as np
 
-movies = pd.read_csv("capstone/movies.csv")
-feed = movies["name"].fillna('') + movies["description"].fillna('')  
+movies = pd.read_csv(r"movies.csv")
+# feed = movies["name"].fillna('') + movies["description"].fillna('')  
 #+ movies["genre"].fillna('') # + movies["director"].fillna('') + movies["stars"]
 
 #preprocessor = hub.KerasLayer(
@@ -28,12 +28,12 @@ feed = movies["name"].fillna('') + movies["description"].fillna('')
 #with open('capstone/recommender_model.pkl', 'wb') as f:
 #    pickle.dump(nn, f)
 
-embed = hub.KerasLayer("capstone/universal_sentence_encoder/") 
+# embed = hub.KerasLayer("capstone\\universal_sentence_encoder/") 
 
-with open('capstone/embeddings.pkl', 'rb') as f:
+with open('embeddings.pkl', 'rb') as f:
     embeddings = pickle.load(f)
 
-with open('capstone/recommender_model.pkl', 'rb') as f:
+with open('recommender_model.pkl', 'rb') as f:
     nn = pickle.load(f)
 
 def get_recommendations(liked_list:list) -> list:

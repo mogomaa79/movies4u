@@ -6,6 +6,6 @@ watched_list = [12,1]
 #print(embeddings[11])
 
 
-#print(movies.iloc[get_recommendations(watched_list), 1])
+print(movies.iloc[get_recommendations(watched_list), 1])
 
-print(movies.iloc[search("john wick"), 1])
+#print(movies.iloc[search("john wick"), 1])
