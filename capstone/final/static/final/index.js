@@ -155,11 +155,13 @@ function Home(){
     document.querySelector('.search-container').style.display = 'none';
     document.querySelector('.watchlist').style.display = 'none';
     document.querySelector('.watchedlist').style.display = 'none';
+    document.querySelector('.recommendations-container').style.display = 'none';
     const navbar = document.querySelector('.navbar');
     navbar.querySelector('#home-button').setAttribute('class', 'active');
     navbar.querySelector('#search-button').setAttribute('class', '');
     navbar.querySelector('#watchlist-button').setAttribute('class', '');
     navbar.querySelector('#watchedlist-button').setAttribute('class', '');
+    navbar.querySelector('#recommend-button').setAttribute('class', '');
 }
 function Search(){
     document.querySelector('.movie-container').style.display = 'none';
@@ -167,11 +169,13 @@ function Search(){
     document.querySelector('.search-container').style.display = 'flex';
     document.querySelector('.watchlist').style.display = 'none';
     document.querySelector('.watchedlist').style.display = 'none';
+    document.querySelector('.recommendations-container').style.display = 'none';
     const navbar = document.querySelector('.navbar');
     navbar.querySelector('#home-button').setAttribute('class', '');
     navbar.querySelector('#search-button').setAttribute('class', 'active');
     navbar.querySelector('#watchlist-button').setAttribute('class', '');
     navbar.querySelector('#watchedlist-button').setAttribute('class', '');
+    navbar.querySelector('#recommend-button').setAttribute('class', '');
     document.querySelector('#search-form').style.display = 'flex';
     document.querySelector('.search-results').innerHTML = '';
 }
@@ -182,12 +186,14 @@ function Watchlist(){
     document.querySelector('.search-container').style.display = 'none';
     document.querySelector('.watchlist').style.display = 'flex';
     document.querySelector('.watchedlist').style.display = 'none';
+    document.querySelector('.recommendations-container').style.display = 'none';
     document.querySelector('.search-results').innerHTML = '';
     const navbar = document.querySelector('.navbar');
     navbar.querySelector('#home-button').setAttribute('class', '');
     navbar.querySelector('#search-button').setAttribute('class', '');
     navbar.querySelector('#watchlist-button').setAttribute('class', 'active');
     navbar.querySelector('#watchedlist-button').setAttribute('class', '');
+    navbar.querySelector('#recommend-button').setAttribute('class', '');
     document.querySelector('#search-form').style.display = 'flex';
     document.querySelector('.watchlist').innerHTML = '';
     fetch(`/watchlist`, {
@@ -208,12 +214,14 @@ function Watchedlist(){
     document.querySelector('.search-container').style.display = 'none';
     document.querySelector('.watchlist').style.display = 'none';
     document.querySelector('.watchedlist').style.display = 'flex';
+    document.querySelector('.recommendations-container').style.display = 'none';
     document.querySelector('.search-results').innerHTML = '';
     const navbar = document.querySelector('.navbar');
     navbar.querySelector('#home-button').setAttribute('class', '');
     navbar.querySelector('#search-button').setAttribute('class', '');
     navbar.querySelector('#watchlist-button').setAttribute('class', '');
     navbar.querySelector('#watchedlist-button').setAttribute('class', 'active');
+    navbar.querySelector('#recommend-button').setAttribute('class', '');
     document.querySelector('#search-form').style.display = 'flex';
     document.querySelector('.watchedlist').innerHTML = '';
     fetch(`/watchedlist`, {
@@ -246,6 +254,7 @@ function Searched(){
         });
     });
 }
+
 document.addEventListener('DOMContentLoaded', ()=>{
     //console.log('tmam1');
     const counter = 34;
@@ -282,12 +291,28 @@ function Random(){
     Film(randomNumber);
 }
 
-function Recommend() { 
+
+function Recommend() {
+    document.querySelector('.movie-container').style.display = 'none';
+    document.querySelector('.film-container').style.display = 'none';
+    document.querySelector('.search-container').style.display = 'none';
+    document.querySelector('.watchlist').style.display = 'none';
+    document.querySelector('.watchedlist').style.display = 'none';
+    document.querySelector('.recommendations-container').style.display = 'flex';
+    const navbar = document.querySelector('.navbar');
+    navbar.querySelector('#home-button').setAttribute('class', '');
+    navbar.querySelector('#search-button').setAttribute('class', '');
+    navbar.querySelector('#watchlist-button').setAttribute('class', '');
+    navbar.querySelector('#watchedlist-button').setAttribute('class', '');
+    navbar.querySelector('#recommend-button').setAttribute('class', 'active');
     fetch(`/recommendations`, {
         method : 'GET',
         })
         .then(response => response.json())
-        .then(function(id){
-            Film(id)
+        .then(function(films){
+            document.querySelector('.recommendations-container').innerHTML = '';
+            films.forEach(film => {
+                Div(film, '.recommendations-container');
+            });
         });
 }

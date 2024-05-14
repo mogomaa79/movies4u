@@ -125,6 +125,15 @@ margin-bottom: 10px;
     
 }
 
+.recommendations-container {
+    display: none;
+    justify-content: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+    flex-direction: row;
+}
+
 .movie-card {
     width: 200px;
     height: 250px;

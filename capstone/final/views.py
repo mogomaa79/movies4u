@@ -177,6 +177,11 @@ def register(request):
 
 @login_required
 def recommendations(request):
+    # Get current user liked_list
     liked_list = User.objects.get(username=request.user.username).watchedlist.all()
-    films = get_recommendations(list(liked_list.values_list("id", flat=True)))
-    return JsonResponse(random.choice(films[:20]) if films else 1, safe=False)
+    if not liked_list: # Handle a user without any liked list
+        return JsonResponse([f.json() for f in Film.objects.filter(id__range=(1, 10))], safe=False)
+    film_ids = get_recommendations(list(liked_list.values_list("id", flat=True)))
+    films = [Film.objects.get(id=i).json() for i in random.choices(film_ids[:200], k=10)]
+    return JsonResponse(films, safe=False)
+    

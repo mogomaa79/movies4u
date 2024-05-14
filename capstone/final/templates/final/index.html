@@ -4,12 +4,15 @@
         <div class="navbar">
             <div onclick="Home()" class="active" id="home-button">Home</div>
             <div onclick="Search()" class="" id="search-button">Search</div>
-            <div  onclick="location.assign('/logout')" id="logout-button">Logout</div>
+            <div onclick="location.assign('/logout')" id="logout-button">Logout</div>
             <div onclick="Watchlist()" id="watchlist-button">Watchlist</div>
             <div onclick="Watchedlist()" id="watchedlist-button">Watchedlist</div>
             <div onclick="Random()" id="random-button">Random</div>
             <div onclick="Recommend()" id="recommend-button">Recommend</div>
             <div style="float: right;">{{ request.user }}</div>
+        </div>
+        <div class="recommendations-container">
+
         </div>
         <div class="movie-container">
 
