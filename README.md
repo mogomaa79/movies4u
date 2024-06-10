@@ -104,4 +104,5 @@ To set up the project, follow these steps:
 
 Contributions are welcome. Please submit a pull request with your proposed changes.
 
-
+## Demo
+![demovideo](movies4u.gif)
