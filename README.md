@@ -35,7 +35,10 @@ The project is structured as follows:
 
 - **`films.ipynb`**: Contains the logic for scraping movie data from the web.
   - Defines a function for requesting and parsing film data, and writes the data to a JSON file.
-
+    
+- **`util.py`**: Loads the embeddings for each word in the dictionary.
+  - Contains `get_recommendations()` which uses the embeddings of each movie's description and recommends similar movies using K-Nearest Neighbours Algorithm.
+    
 ## Setup
 
 To set up the project, follow these steps:
