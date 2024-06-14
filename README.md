@@ -102,6 +102,9 @@ To set up the project, follow these steps:
 ### Recommendations
 
 1. **View Recommendations**: Get personalized film recommendations based on your watched list.
+   
+### Database schema 
+![schema](schema.png)
 
 ## Contributing
 
