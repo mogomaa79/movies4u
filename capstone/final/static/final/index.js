@@ -72,10 +72,13 @@ function Film(id){
         const h3 = document.createElement('h3');
         h3.innerHTML = film.rating;
         const h4 = document.createElement('h4');
-        h4.innerHTML = film.genre;
+        
+        h4.innerHTML = film.genres;
         const h5 = document.createElement('h5');
-        h5.innerHTML = film.director;
+        
+        h5.innerHTML = film.directors;
         const h5_2 = document.createElement('h5');
+        
         h5_2.innerHTML = film.stars;
         const h6 = document.createElement('h6');
         h6.innerHTML = film.year;
@@ -136,9 +139,9 @@ function Div(film, parent){
     p_year = document.createElement('p');
     p_year.innerHTML = `Year: ${film.year}`;
     p_director = document.createElement('p');
-    p_director.innerHTML = `Director: ${film.director}`;
+    p_director.innerHTML = `Director: ${film.directors}`;
     p_genre = document.createElement('p');
-    p_genre.innerHTML = `Genre: ${film.genre}`;
+    p_genre.innerHTML = `Genre: ${film.genres}`;
     p_rating = document.createElement('p');
     p_rating.innerHTML = `${film.rating}/10`;
     div_additional.append(h3);
