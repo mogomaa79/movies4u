@@ -311,7 +311,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     window.onscroll = function(){
         let isHome = document.querySelector('.active').innerHTML == 'Home';
         if (isHome && window.scrollY + window.innerHeight >= document.body.offsetHeight){
-            console.log("a7a");
+            
             start += counter;
             end = counter + start + 1;
             fetch(`films?start=${start}&end=${end}`)
