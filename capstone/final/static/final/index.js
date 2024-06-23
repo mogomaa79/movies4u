@@ -53,6 +53,7 @@ function Film(id){
     document.querySelector('.search-container').style.display = 'none';
     document.querySelector('.watchlist').style.display = 'none';
     document.querySelector('.watchedlist').style.display = 'none';
+    document.querySelector('.recommendations-container').style.display = 'none';
     document.querySelector('.film-container').innerHTML = '';
     fetch(`films/${id}`)
     .then(response => response.json())
@@ -258,39 +259,10 @@ function Searched(){
     });
 }
 
-document.addEventListener('DOMContentLoaded', ()=>{
-    //console.log('tmam1');
-    const counter = 34;
-    let start = 1;
-    let end = counter + start;
-    fetch(`films?start=${start}&end=${end}`)
-    .then(response => response.json())
-    .then(function(films){
-        //console.log(films);
-        films.forEach(film => {
-            Div(film, '.movie-container');
-        });
-    });
 
-    window.onscroll = function(){
-        if (window.scrollY + window.innerHeight >= document.body.offsetHeight){
-            start += counter;
-            end = counter + start + 1;
-            fetch(`films?start=${start}&end=${end}`)
-            .then(response => response.json())
-            .then(function(films){
-                //console.log(films);
-                films.forEach(film => {
-                    Div(film, '.movie-container');
-                });
-            });
-        }
-    };
-    
-});
 
 function Random(){
-    document.querySelector('.recommendations-container').style.display = 'none';
+    // document.querySelector('.recommendations-container').style.display = 'none';
     let randomNumber = Math.floor(Math.random() * 9999) + 1;
     Film(randomNumber);
 }
@@ -320,3 +292,37 @@ function Recommend() {
             });
         });
 }
+
+document.addEventListener('DOMContentLoaded', ()=>{
+    //console.log('tmam1');
+    const counter = 34;
+    let start = 1;
+    let end = counter + start;
+    fetch(`films?start=${start}&end=${end}`)
+    .then(response => response.json())
+    .then(function(films){
+        //console.log(films);
+        films.forEach(film => {
+            Div(film, '.movie-container');
+        });
+    });
+    
+    
+    window.onscroll = function(){
+        let isHome = document.querySelector('.active').innerHTML == 'Home';
+        if (isHome && window.scrollY + window.innerHeight >= document.body.offsetHeight){
+            console.log("a7a");
+            start += counter;
+            end = counter + start + 1;
+            fetch(`films?start=${start}&end=${end}`)
+            .then(response => response.json())
+            .then(function(films){
+                //console.log(films);
+                films.forEach(film => {
+                    Div(film, '.movie-container');
+                });
+            });
+        }
+    };
+    
+});
